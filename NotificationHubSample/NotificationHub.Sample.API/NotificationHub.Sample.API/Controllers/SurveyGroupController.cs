@@ -46,7 +46,7 @@ namespace NotificationHub.Sample.API.Controllers
         {
             try
             {
-                var surveyGroups = _db.SurveyGroups.Include(group => group.ApplicationUsers).ToList();
+                var surveyGroups = await _db.SurveyGroups.Include(group => group.ApplicationUsers).ToListAsync();
                 surveyGroups.ForEach(group => group.ApplicationUsers.ForEach(user => group.ApplicationUserIds.Add(user.Id)));
                 return Ok(surveyGroups);
             }
@@ -62,7 +62,7 @@ namespace NotificationHub.Sample.API.Controllers
         {
             try
             {
-                var client = _db.SurveyGroups.Find(id);
+                var client = await _db.SurveyGroups.FindAsync(id);
                 return Ok(client);
             }
             catch (Exception)

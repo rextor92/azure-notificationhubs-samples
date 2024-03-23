@@ -9,7 +9,6 @@ using NotificationHub.Sample.API.Database;
 using NotificationHub.Sample.API.Models.Authentication;
 using NotificationHub.Sample.API.Models.Notifications;
 using NotificationHub.Sample.API.Services.Notifications;
-using NotificationHub.Sample.API.Services.SystemClock;
 
 namespace NotificationHub.Sample.API
 {
@@ -48,7 +47,6 @@ namespace NotificationHub.Sample.API
 
             // Add services
             services.AddSingleton<INotificationService, NotificationHubService>();
-            services.AddSingleton<ISystemClock, SystemClockService>();
 
             services.AddOptions<NotificationHubOptions>()
                 .Configure(Configuration.GetSection("NotificationHub").Bind)

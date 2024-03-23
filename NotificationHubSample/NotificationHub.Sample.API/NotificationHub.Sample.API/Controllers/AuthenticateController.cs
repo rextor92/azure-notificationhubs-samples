@@ -16,15 +16,18 @@ namespace NotificationHub.Sample.API.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly TimeProvider _timeProvider;
         private readonly IConfiguration _configuration;
-        private readonly ISystemClock _systemClockService;
 
-        public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, ISystemClock systemClockService)
+        public AuthenticateController(UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            TimeProvider timeProvider,
+            IConfiguration configuration)
         {
             this._userManager = userManager;
             this._roleManager = roleManager;
+            this._timeProvider = timeProvider;
             this._configuration = configuration;
-            this._systemClockService = systemClockService;
         }
 
         [HttpPost]
@@ -52,7 +55,7 @@ namespace NotificationHub.Sample.API.Controllers
                 var token = new JwtSecurityToken(
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
-                    expires: _systemClockService.UtcNow.UtcDateTime.AddHours(3),
+                    expires: _timeProvider.GetUtcNow().UtcDateTime.AddHours(3),
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
@@ -70,7 +73,7 @@ namespace NotificationHub.Sample.API.Controllers
                     expiration = token.ValidTo,
                     username = model.UserName,
                     email = user.Email,
-                    role = userRoles != null ? userRoles[0] : "Site-Manager",
+                    role = userRoles[0] ?? "Site-Manager",
                     user = userDetails
                 });
             }

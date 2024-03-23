@@ -1,5 +1,4 @@
 using System.Text;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,6 @@ using NotificationHub.Sample.API.Database;
 using NotificationHub.Sample.API.Models.Authentication;
 using NotificationHub.Sample.API.Models.Notifications;
 using NotificationHub.Sample.API.Services.Notifications;
-using NotificationHub.Sample.API.Services.SystemClock;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +35,6 @@ builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
 
 // Add services
 builder.Services.AddSingleton<INotificationService, NotificationHubService>();
-builder.Services.AddSingleton<ISystemClock, SystemClockService>();
 
 builder.Services.AddOptions<NotificationHubOptions>()
     .Configure(Configuration.GetSection("NotificationHub").Bind)
@@ -65,6 +62,8 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
     };
 });
+
+builder.Services.AddSingleton(_ => TimeProvider.System);
 
 builder.Services.AddCors(options =>
 {
@@ -96,24 +95,3 @@ app.UseEndpoints(endpoints =>
 });
 
 app.Run();
-
-//using Microsoft.AspNetCore.Hosting;
-//using Microsoft.Extensions.Hosting;
-
-//namespace NotificationHub.Sample.API
-//{
-//    public class Program
-//    {
-//        public static void Main(string[] args)
-//        {
-//            CreateHostBuilder(args).Build().Run();
-//        }
-
-//        public static IHostBuilder CreateHostBuilder(string[] args) =>
-//            Host.CreateDefaultBuilder(args)
-//                .ConfigureWebHostDefaults(webBuilder =>
-//                {
-//                    webBuilder.UseStartup<Startup>();
-//                });
-//    }
-//}

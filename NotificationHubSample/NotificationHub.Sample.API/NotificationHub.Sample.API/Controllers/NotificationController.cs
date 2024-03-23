@@ -82,7 +82,7 @@ namespace NotificationHub.Sample.API.Controllers
         {
             try
             {
-                var surveyGroups = _db.NotificationMessages.Include(message => message.SurveyGroups).Include(message => message.Users).ToList();
+                var surveyGroups = await _db.NotificationMessages.Include(message => message.SurveyGroups).Include(message => message.Users).ToListAsync();
                 return Ok(surveyGroups);
             }
             catch (Exception ex)

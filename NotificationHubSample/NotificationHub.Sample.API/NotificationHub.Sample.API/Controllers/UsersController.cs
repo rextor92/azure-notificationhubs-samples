@@ -21,7 +21,7 @@ namespace NotificationHub.Sample.API.Controllers
         {
             try
             {
-                var users = _db.Users.Include(user => user.SurveyGroups).ToList();
+                var users = await _db.Users.Include(user => user.SurveyGroups).ToListAsync();
                 var userrolesmaster = _db.Roles.ToList();
                 var userroles = _db.UserRoles.ToList();
 
