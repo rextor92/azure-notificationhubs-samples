@@ -106,7 +106,10 @@ namespace NotificationHub.Sample.API.Controllers
             tags.Add($"username:{username}");
 
             // find groups associated
-            var groupsForUser = _db.SurveyGroups.Where(group => group.ApplicationUsers.Where(user => user.UserName == username).FirstOrDefault() != null).ToList();
+            var groupsForUser = _db.SurveyGroups
+                .Where(group => group.ApplicationUsers
+                .FirstOrDefault(user => user.UserName == username) != null)
+                .ToList();
             foreach (var group in groupsForUser)
             {
                 tags.Add("group:" + group.GroupName.Replace(' ', '-'));

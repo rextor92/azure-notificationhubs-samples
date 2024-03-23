@@ -26,8 +26,8 @@ namespace NotificationHub.Sample.API.Services.Notifications
         public async Task<bool> CreateOrUpdateInstallationAsync(DeviceInstallation deviceInstallation, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(deviceInstallation?.InstallationId) ||
-                string.IsNullOrWhiteSpace(deviceInstallation?.Platform) ||
-                string.IsNullOrWhiteSpace(deviceInstallation?.PushChannel))
+                string.IsNullOrWhiteSpace(deviceInstallation.Platform) ||
+                string.IsNullOrWhiteSpace(deviceInstallation.PushChannel))
                 return false;
 
             var installation = new Installation()
@@ -73,7 +73,7 @@ namespace NotificationHub.Sample.API.Services.Notifications
 
         public async Task<List<DeviceTrend>> GetAllRegistrationInfoAsync()
         {
-            List<DeviceTrend> deviceRegistrationTrends = new List<DeviceTrend>();
+            List<DeviceTrend> deviceRegistrationTrends = [];
 
             int windowsRegistrationCount = 0;
             int fcmV1RegistrationCount = 0;
@@ -140,7 +140,8 @@ namespace NotificationHub.Sample.API.Services.Notifications
             }
         }
 
-        private string PrepareNotificationPayload(string template, string title, string text) => template
+        private static string PrepareNotificationPayload(string template, string title, string text)
+            => template
             .Replace("$(title)", title, StringComparison.InvariantCulture)
             .Replace("$(alertMessage)", text, StringComparison.InvariantCulture);
 

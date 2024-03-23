@@ -15,7 +15,7 @@ namespace NotificationHub.Sample.API.Controllers
     public class SurveyGroupController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
-        private NotificationHubClient _hub;
+        private readonly NotificationHubClient _hub;
 
         public SurveyGroupController(ApplicationDbContext dbContext)
         {
@@ -121,7 +121,7 @@ namespace NotificationHub.Sample.API.Controllers
                 // users to add
                 foreach (var user in users)
                 {
-                    if (existingGroup.ApplicationUsers.Where(usr => usr.Id == user.Id).Count() == 0)
+                    if (!existingGroup.ApplicationUsers.Any(usr => usr.Id == user.Id))
                     {
                         existingGroup.ApplicationUsers.Add(user);
                     }

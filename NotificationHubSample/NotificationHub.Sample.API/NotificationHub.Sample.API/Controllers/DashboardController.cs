@@ -57,12 +57,12 @@ namespace NotificationHub.Sample.API.Controllers
                 case "Monthly":
                     {
                         dashboardInsight.NotificationTrends = _db.NotificationMessages
-                                                                .GroupBy(m => m.SentTime.Date.Month)
-                                                                .Select(m => new NotificationTrend()
-                                                                {
-                                                                    Timestamp = m.Key + "-" + DateTime.Now.Year,
-                                                                    NotificationsSent = m.Count()
-                                                                }).ToList();
+                            .GroupBy(m => m.SentTime.Date.Month)
+                            .Select(m => new NotificationTrend()
+                            {
+                                Timestamp = m.Key + "-" + DateTime.Now.Year,
+                                NotificationsSent = m.Count()
+                            }).ToList();
                     }
                     break;
 
