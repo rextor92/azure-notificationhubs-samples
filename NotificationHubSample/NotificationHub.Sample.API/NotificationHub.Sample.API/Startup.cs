@@ -1,12 +1,8 @@
+using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using NotificationHub.Sample.API.Database;
@@ -14,8 +10,6 @@ using NotificationHub.Sample.API.Models.Authentication;
 using NotificationHub.Sample.API.Models.Notifications;
 using NotificationHub.Sample.API.Services.Notifications;
 using NotificationHub.Sample.API.Services.SystemClock;
-using System;
-using System.Text;
 
 namespace NotificationHub.Sample.API
 {
@@ -41,10 +35,10 @@ namespace NotificationHub.Sample.API
             // For Azure Notification Service
             AzureNotificationHubConnectionString = Configuration.GetConnectionString("AzureNotificationHub");
             AzureNotificationHubNameSpace = Configuration["AzureNotificationHubNameSpace"];
-            // For Entity Framework  
+            // For Entity Framework
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnectionString")));
 
-            // For Identity  
+            // For Identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -60,7 +54,7 @@ namespace NotificationHub.Sample.API
                 .Configure(Configuration.GetSection("NotificationHub").Bind)
                 .ValidateDataAnnotations();
 
-            // Adding Authentication  
+            // Adding Authentication
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -68,7 +62,7 @@ namespace NotificationHub.Sample.API
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
 
-            // Adding Jwt Bearer  
+            // Adding Jwt Bearer
             .AddJwtBearer(options =>
             {
                 options.SaveToken = true;

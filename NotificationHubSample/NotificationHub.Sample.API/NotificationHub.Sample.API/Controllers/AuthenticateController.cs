@@ -1,17 +1,12 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using NotificationHub.Sample.API.Models.Authentication;
-using NotificationHub.Sample.API.Models.Common;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using NotificationHub.Sample.API.Models.Authentication;
+using NotificationHub.Sample.API.Models.Common;
 
 namespace NotificationHub.Sample.API.Controllers
 {
@@ -23,13 +18,13 @@ namespace NotificationHub.Sample.API.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
         private readonly ISystemClock _systemClockService;
+
         public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, ISystemClock systemClockService)
         {
             this._userManager = userManager;
             this._roleManager = roleManager;
             this._configuration = configuration;
             this._systemClockService = systemClockService;
-  
         }
 
         [HttpPost]
@@ -57,11 +52,11 @@ namespace NotificationHub.Sample.API.Controllers
                 var token = new JwtSecurityToken(
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
-                    expires:  _systemClockService.UtcNow.UtcDateTime.AddHours(3),
+                    expires: _systemClockService.UtcNow.UtcDateTime.AddHours(3),
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
-                
+
                 var userDetails = new UserDetails
                 {
                     FirstName = model.UserName,

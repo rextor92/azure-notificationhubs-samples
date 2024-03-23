@@ -1,7 +1,6 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using NotificationHub.Sample.API.Models.Authentication;
 using NotificationHub.Sample.API.Models.Notifications;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NotificationHub.Sample.API.Models.Groups
 {

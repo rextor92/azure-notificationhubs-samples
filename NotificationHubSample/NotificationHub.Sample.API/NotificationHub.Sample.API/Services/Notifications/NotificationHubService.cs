@@ -1,13 +1,8 @@
 using Microsoft.Azure.NotificationHubs;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NotificationHub.Sample.API.Models;
 using NotificationHub.Sample.API.Models.Dashboard;
 using NotificationHub.Sample.API.Models.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace NotificationHub.Sample.API.Services.Notifications
 {
@@ -24,10 +19,9 @@ namespace NotificationHub.Sample.API.Services.Notifications
 
             _installationPlatform = new Dictionary<string, NotificationPlatform>
             {
-                { nameof(NotificationPlatform.Fcm).ToLower(), NotificationPlatform.Fcm }
+                { nameof(NotificationPlatform.FcmV1).ToLower(), NotificationPlatform.FcmV1 }
             };
         }
-        
 
         public async Task<bool> CreateOrUpdateInstallationAsync(DeviceInstallation deviceInstallation, CancellationToken cancellationToken)
         {
@@ -82,19 +76,19 @@ namespace NotificationHub.Sample.API.Services.Notifications
             List<DeviceTrend> deviceRegistrationTrends = new List<DeviceTrend>();
 
             int windowsRegistrationCount = 0;
-            int fcmRegistrationCount = 0;
+            int fcmV1RegistrationCount = 0;
             int apnsRegistrationCount = 0;
 
             var allRegistrations = await _hub.GetAllRegistrationsAsync(0);
-            foreach(var registration in allRegistrations)
+            foreach (var registration in allRegistrations)
             {
                 if (registration is WindowsRegistrationDescription)
                 {
                     windowsRegistrationCount++;
                 }
-                else if (registration is FcmRegistrationDescription)
+                else if (registration is FcmV1RegistrationDescription)
                 {
-                    fcmRegistrationCount++;
+                    fcmV1RegistrationCount++;
                 }
                 else if (registration is AppleRegistrationDescription)
                 {
@@ -103,7 +97,7 @@ namespace NotificationHub.Sample.API.Services.Notifications
             }
 
             deviceRegistrationTrends.Add(new DeviceTrend() { DeviceType = "Windows", RegistrationCount = windowsRegistrationCount });
-            deviceRegistrationTrends.Add(new DeviceTrend() { DeviceType = "Android", RegistrationCount = fcmRegistrationCount });
+            deviceRegistrationTrends.Add(new DeviceTrend() { DeviceType = "Android", RegistrationCount = fcmV1RegistrationCount });
             deviceRegistrationTrends.Add(new DeviceTrend() { DeviceType = "Apple", RegistrationCount = apnsRegistrationCount });
 
             return deviceRegistrationTrends;
@@ -154,17 +148,17 @@ namespace NotificationHub.Sample.API.Services.Notifications
         {
             var sendTasks = new Task[]
             {
-                _hub.SendFcmNativeNotificationAsync(androidPayload, token)                
+                _hub.SendFcmV1NativeNotificationAsync(androidPayload, token)
             };
 
             return Task.WhenAll(sendTasks);
         }
 
-        Task SendPlatformNotificationsAsync(string androidPayload, string iOSPayload, IEnumerable<string> tags, CancellationToken token)
+        private Task SendPlatformNotificationsAsync(string androidPayload, string iOSPayload, IEnumerable<string> tags, CancellationToken token)
         {
             var sendTasks = new Task[]
             {
-                _hub.SendFcmNativeNotificationAsync(androidPayload, tags, token)
+                _hub.SendFcmV1NativeNotificationAsync(androidPayload, tags, token)
             };
 
             return Task.WhenAll(sendTasks);

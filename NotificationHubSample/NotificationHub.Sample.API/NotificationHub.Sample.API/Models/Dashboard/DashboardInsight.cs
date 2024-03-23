@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace NotificationHub.Sample.API.Models.Dashboard
 {
     public class DashboardInsight

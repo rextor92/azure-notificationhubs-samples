@@ -1,4 +1,3 @@
-
 namespace NotificationHub.Sample.API.Models.Dashboard
 {
     public class NotificationTrend

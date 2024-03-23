@@ -1,4 +1,3 @@
-
 namespace NotificationHub.Models.Notifications
 {
     public class DeviceRegistration

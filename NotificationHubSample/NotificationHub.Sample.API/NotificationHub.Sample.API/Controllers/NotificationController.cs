@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.NotificationHubs.Messaging;
@@ -5,14 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using NotificationHub.Sample.API.Database;
 using NotificationHub.Sample.API.Models.Notifications;
 using NotificationHub.Sample.API.Services.Notifications;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace NotificationHub.Sample.API.Controllers
 {
@@ -141,7 +136,7 @@ namespace NotificationHub.Sample.API.Controllers
 
         private static void ReturnGoneIfHubResponseIsGone(MessagingException e)
         {
-            if(e.InnerException is WebException webex)
+            if (e.InnerException is WebException webex)
             {
                 if (webex.Status == WebExceptionStatus.ProtocolError)
                 {
@@ -149,7 +144,7 @@ namespace NotificationHub.Sample.API.Controllers
                     if (response.StatusCode == HttpStatusCode.Gone)
                         throw new HttpRequestException(HttpStatusCode.Gone.ToString());
                 }
-            }            
+            }
         }
     }
 }

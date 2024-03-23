@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NotificationHub.Sample.API.Database;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NotificationHub.Sample.API.Controllers
 {

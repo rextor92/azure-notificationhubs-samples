@@ -1,8 +1,6 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using NotificationHub.Sample.API.Models.Authentication;
 using NotificationHub.Sample.API.Models.Groups;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NotificationHub.Sample.API.Models.Notifications
 {
@@ -24,6 +22,7 @@ namespace NotificationHub.Sample.API.Models.Notifications
 
         [NotMapped]
         public List<string> UserTags { get; set; }
+
         [NotMapped]
         public List<int> SurveyGroupTags { get; set; }
     }

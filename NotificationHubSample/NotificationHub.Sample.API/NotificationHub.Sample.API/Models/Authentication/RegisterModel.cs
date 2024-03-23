@@ -13,6 +13,5 @@ namespace NotificationHub.Sample.API.Models.Authentication
 
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
-
     }
 }

@@ -1,4 +1,3 @@
-
 namespace NotificationHub.Sample.API.Models.Groups
 {
     public class GroupUserAssociation

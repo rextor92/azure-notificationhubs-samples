@@ -10,7 +10,7 @@ namespace NotificationHub.Sample.API.Notifications
 
         private Notifications()
         {
-            Hub = NotificationHubClient.CreateClientFromConnectionString(Startup.AzureNotificationHubConnectionString,Startup.AzureNotificationHubNameSpace);
+            Hub = NotificationHubClient.CreateClientFromConnectionString(Startup.AzureNotificationHubConnectionString, Startup.AzureNotificationHubNameSpace);
         }
     }
 }

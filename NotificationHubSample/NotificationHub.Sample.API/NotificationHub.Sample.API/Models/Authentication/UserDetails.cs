@@ -1,4 +1,3 @@
-
 namespace NotificationHub.Sample.API.Models.Authentication
 {
     public class UserDetails

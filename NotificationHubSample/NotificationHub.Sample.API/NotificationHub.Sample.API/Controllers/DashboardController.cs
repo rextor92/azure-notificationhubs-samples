@@ -1,11 +1,8 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using NotificationHub.Sample.API.Database;
 using NotificationHub.Sample.API.Models.Dashboard;
 using NotificationHub.Sample.API.Services.Notifications;
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NotificationHub.Sample.API.Controllers
 {
@@ -44,6 +41,7 @@ namespace NotificationHub.Sample.API.Controllers
                                                                 }).ToList();
                     }
                     break;
+
                 case "Weekly":
                     {
                         dashboardInsight.NotificationTrends = notificationMessages
@@ -55,6 +53,7 @@ namespace NotificationHub.Sample.API.Controllers
                                                                 }).ToList();
                     }
                     break;
+
                 case "Monthly":
                     {
                         dashboardInsight.NotificationTrends = _db.NotificationMessages
@@ -66,6 +65,7 @@ namespace NotificationHub.Sample.API.Controllers
                                                                 }).ToList();
                     }
                     break;
+
                 default:
                     break;
             }

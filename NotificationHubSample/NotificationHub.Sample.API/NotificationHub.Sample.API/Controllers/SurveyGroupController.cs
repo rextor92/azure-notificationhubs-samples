@@ -1,16 +1,11 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.EntityFrameworkCore;
 using NotificationHub.Sample.API.Database;
 using NotificationHub.Sample.API.Models.Authentication;
 using NotificationHub.Sample.API.Models.Groups;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace NotificationHub.Sample.API.Controllers
 {
@@ -67,7 +62,6 @@ namespace NotificationHub.Sample.API.Controllers
         {
             try
             {
-
                 var client = _db.SurveyGroups.Find(id);
                 return Ok(client);
             }
@@ -75,7 +69,6 @@ namespace NotificationHub.Sample.API.Controllers
             {
                 return BadRequest();
             }
-
         }
 
         [Produces("application/json")]
@@ -139,7 +132,7 @@ namespace NotificationHub.Sample.API.Controllers
                     if (!string.IsNullOrEmpty(user.RegistrationId))
                     {
                         var registrationDescription = await _hub.GetRegistrationAsync<RegistrationDescription>(user.RegistrationId);
-                        if (!registrationDescription.Tags.Contains($"group:{existingGroup.GroupName.Replace(' ','-')}"))
+                        if (!registrationDescription.Tags.Contains($"group:{existingGroup.GroupName.Replace(' ', '-')}"))
                         {
                             registrationDescription.Tags.Add($"group:{existingGroup.GroupName.Replace(' ', '-')}");
                             await _hub.CreateOrUpdateRegistrationAsync(registrationDescription);

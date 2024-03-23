@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using NotificationHub.Sample.API.Models.Groups;
 using NotificationHub.Sample.API.Models.Notifications;
-using System.Collections.Generic;
-
 
 namespace NotificationHub.Sample.API.Models.Authentication
 {
